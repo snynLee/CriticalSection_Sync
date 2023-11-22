@@ -1,7 +1,6 @@
 #include <iostream>
 #include <Windows.h>
-#include <process.h>
-#include <numeric> 
+#include <process.h> 
 
 using namespace std;
 
@@ -15,7 +14,7 @@ int numbers[NUMBER];
 int sum = 0;
 float avg = 0;
 
-// ¼ıÀÚ ÀÔ·Â ¹× Ãâ·Â
+// ìˆ«ì ì…ë ¥ ë° ì¶œë ¥
 void Input()
 {
 	bool ValidInput = false;
@@ -24,18 +23,18 @@ void Input()
 		try {
 			for (int i = 0; i < NUMBER; i++)
 			{
-				cout << i + 1 << "¹øÂ° ¼ıÀÚ¸¦ ÀÔ·ÂÇÏ¼¼¿ä : ";
+				cout << i + 1 << "ë²ˆì§¸ ìˆ«ìë¥¼ ì…ë ¥í•˜ì„¸ìš” : ";
 				cin >> numbers[i];
 
-				// À½¼ö ÀÔ·Â
+				// ìŒìˆ˜ ì…ë ¥
 				if (numbers[i] < 0)
-					throw string("À½¼ö ºÒ°¡!");
-				// ¹®ÀÚ ÀÔ·Â
+					throw string("ìŒìˆ˜ ë¶ˆê°€!");
+				// ë¬¸ì ì…ë ¥
 				if (!cin)
 				{
 					cin.clear();
 					cin.ignore(INT_MAX, '\n');
-					throw string("¹®ÀÚ ºÒ°¡!");
+					throw string("ë¬¸ì ë¶ˆê°€!");
 				}
 
 			}
@@ -48,7 +47,7 @@ void Input()
 	} while (!ValidInput);
 
 	cout << "=========================" << endl;
-	cout << "ÀÔ·ÂÇÑ ¼ıÀÚ = { ";
+	cout << "ì…ë ¥í•œ ìˆ«ì = { ";
 
 	for (int j = 0; j < NUMBER; j++)
 		cout << numbers[j] << " ";
@@ -56,7 +55,7 @@ void Input()
 	cout << "}" << endl;
 }
 
-// ÇÕ°è
+// í•©ê³„
 DWORD WINAPI ThreadSumProc(PVOID lpParam)
 {
 	DWORD* nPtr = (DWORD*)lpParam;
@@ -85,7 +84,7 @@ int main()
 
 	Input();
 
-	// ½º·¹µå »ı¼º
+	// ìŠ¤ë ˆë“œ ìƒì„±
 
 	for (DWORD i = 0; i < NUM_OF_THREAD; i++)
 	{
@@ -104,10 +103,10 @@ int main()
 		}
 	}
 
-	// ½º·¹µå ´ë±â
+	// ìŠ¤ë ˆë“œ ëŒ€ê¸°
 	WaitForMultipleObjects(NUM_OF_THREAD, hThread, TRUE, INFINITE);
 
-	// ½º·¹µå Á¾·á
+	// ìŠ¤ë ˆë“œ ì¢…ë£Œ
 	for (DWORD i = 0; i < NUM_OF_THREAD; i++)
 	{
 		CloseHandle(hThread[i]);
@@ -115,11 +114,11 @@ int main()
 
 	DeleteCriticalSection(&hCriticalSection);
 
-	cout << "ÇÕ°è = " << sum << endl;
+	cout << "í•©ê³„ = " << sum << endl;
 
 	avg = static_cast<float>(sum) / NUMBER;
 
-	cout << "Æò±Õ = " << avg << endl;
+	cout << "í‰ê·  = " << avg << endl;
 
 	return 0;
 }
